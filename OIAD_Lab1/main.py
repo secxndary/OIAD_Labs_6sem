@@ -12,8 +12,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.inspection import DecisionBoundaryDisplay
 
 
-
-
 iris_dataset = load_iris()
 
 print("\n\n=========================  Ключи iris_dataset  =========================\n{}".format(iris_dataset.keys()))

@@ -28,18 +28,18 @@ knn = KNeighborsClassifier(algorithm='auto',
                            n_jobs=1,
                            n_neighbors=1,
                            p=2,
-                           weights='uniform')   # knn — обучающий набор, алгоритмы прогноза и построения модели
-knn.fit(X_train, y_train)                       # fit() – построение модели на обучающем наборе
+                           weights='uniform')
+knn.fit(X_train, y_train)
 
-X_new = np.array([[5, 2.9, 1, 0.2]])            # наши новые данные в двумерном массиве, по которым надо сделать прогноз
+X_new = np.array([[5, 2.9, 1, 0.2]])
 print("======\tФорма массива X_new:   {}".format(X_new. shape))
 
 
-prediction = knn.predict(X_new)                 # совершение прогноза для нового ириса
+prediction = knn.predict(X_new)
 print("\n==========\tПрогноз: {}".format(prediction))
 print("==========\tМетка:   {}".format(iris_dataset['target_names'][prediction]))
 
-y_pred = knn.predict(X_test)                    # прогноз на старом тестовом наборе
+y_pred = knn.predict(X_test)
 print("\n======\tПрогнозы для тестового набора:\n {}".format(y_pred))
 
 
