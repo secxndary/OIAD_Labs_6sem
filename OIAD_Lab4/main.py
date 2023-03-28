@@ -33,7 +33,7 @@ print("Правильность на тестовом наборе: {:.2f}".form
 
 
 ridge = Ridge().fit(X_train, y_train)
-print("\n=========  BOSTON  REGULARIZED  ========")
+print("\n========  BOSTON  REGULARIZED  ========")
 print("Правильность на обучающем наборе: {:.2f}".format(ridge.score(X_train, y_train)))
 print("Правильность на тестовом наборе: {:.2f}".format(ridge.score(X_test, y_test)))
 
