@@ -32,7 +32,7 @@ print("Правильность на тестовом наборe: {:.3f}".forma
 
 tree = DecisionTreeClassifier(max_depth=4, random_state=0)
 tree.fit(X_train, y_train)
-print("Правильность на обучающем наборe: {:.3f}".format(tree.score(X_train, y_train)))
+print("\nПравильность на обучающем наборe: {:.3f}".format(tree.score(X_train, y_train)))
 print("Правильность на тестовом наборe: {:.3f}".format(tree.score(X_test, y_test)))
 
 
@@ -76,7 +76,7 @@ Image(graph.create_png())
 
 from sklearn.tree import DecisionTreeClassifier
 tree = DecisionTreeClassifier().fit(X_train, y_train)
-print("Важности признаков: \n{}". format (tree.feature_importances_))
+print("\nВажности признаков: \n{}".format(tree.feature_importances_))
 
 def plot_feature_cancer(model):
     n_features = cancer.data.shape[1]

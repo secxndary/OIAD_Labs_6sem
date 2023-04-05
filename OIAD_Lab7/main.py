@@ -4,7 +4,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.naive_bayes import GaussianNB
 
 
-# Классификатор BernoulliNB
+# Классификатор BernoulliNB - бинарные данные (текст)
 X = np.array([[0, 1, 0, 1], [1, 0, 1, 1], [0, 0, 0, 1], [1, 0, 1, 0]])
 y = np.array([0, 1, 0, 1])
 counts = {}
@@ -18,7 +18,7 @@ clf.fit(X, y)
 print(clf.predict(X[2:3]))
 
 
-# Классификатор MultinomialNB
+# Классификатор MultinomialNB - дискретные данные (текст)
 rng = np.random.RandomState(1)
 X = rng.randint(5, size=(6, 100))
 y = np.array([1, 2, 3, 4, 5, 6])
@@ -27,7 +27,7 @@ clf.fit(X, y)
 print(clf.predict(X[2:3]))
 
 
-# Классификатор GaussianNB
+# Классификатор GaussianNB - любые непрерывные данные, большая размерность
 X = np.array([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
 Y = np.array([1, 1, 1, 2, 2, 2])
 clf = GaussianNB()
