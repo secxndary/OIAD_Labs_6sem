@@ -1,9 +1,8 @@
 import mglearn
 import matplotlib.pyplot as plt
 import numpy as np
-
-
 from sklearn.datasets import make_blobs
+
 X, y = make_blobs(centers=4, random_state=8)
 y = y % 2
 
@@ -22,23 +21,25 @@ plt.ylabel("Признак 1")
 plt.show()
 
 X_new = np.hstack([X, X[:, 1:] ** 2])
-from mpl_toolkits.mplot3d import Axes3D, axes3d
+
 figure = plt.figure()
-ax = Axes3D(figure, elev=-152, azim=-26)
+ax = plt.axes(projection='3d', elev=-152, azim=-26)
 mask = y == 0
 
 ax.scatter(X_new[mask, 0], X_new[mask, 1], X_new[mask, 2], c='b', cmap=mglearn.cm2, s=60)
 ax.scatter(X_new[~mask, 0], X_new[~mask, 1], X_new[~mask, 2], c='r', marker='^', cmap=mglearn.cm2, s=60)
-ax.set_xlabel("признак0")
-ax.set_ylabel("признак1")
-ax.set_zlabel("признак1 ** 2")
-plt.show()
+
+ax.set_xlabel("Признак 0")
+ax.set_ylabel("Признак 1")
+ax.set_zlabel("Признак 1 ** 2")
+plt.show(block=True)
 
 linear_svm_3d = LinearSVC().fit(X_new, y)
-coef, intercept = linear_svm_3d.coef_.ravel(), linear_svm_3d.intercept_
-figure = plt.figure()
 
-ax = Axes3D(figure, elev=-152, azim=-26)
+coef, intercept = linear_svm_3d.coef_.ravel(), linear_svm_3d.intercept_
+
+figure = plt.figure()
+ax = plt.axes(projection='3d', elev=-152, azim=-26)
 
 xx = np.linspace(X_new[:, 0].min() - 2, X_new[:, 0].max() + 2, 50)
 yy = np.linspace(X_new[:, 1].min() - 2, X_new[:, 1].max() + 2, 50)
@@ -46,19 +47,17 @@ yy = np.linspace(X_new[:, 1].min() - 2, X_new[:, 1].max() + 2, 50)
 XX, YY = np.meshgrid(xx, yy)
 ZZ = (coef[0] * XX + coef[1] * YY + intercept) / -coef[2]
 
-
-
 ax.plot_surface(XX, YY, ZZ, rstride=8, cstride=8, alpha=0.3)
 ax.scatter(X_new[mask, 0], X_new[mask, 1], X_new[mask, 2], c='b', cmap=mglearn.cm2, s=60)
 ax.scatter(X_new[~mask, 0], X_new[~mask, 1], X_new[~mask, 2], c='r', marker='^', cmap=mglearn.cm2, s=60)
 
-ax.set_xlabel("признак0")
-ax.set_ylabel("признак1")
-ax.set_zlabel("признак1 ** 2")
+ax.set_xlabel("Признак 0")
+ax.set_ylabel("Признак 1")
+ax.set_zlabel("Признак 1 ** 2")
 plt.show()
 
 
-ZZ = YY**2
+ZZ = YY ** 2
 dec = linear_svm_3d.decision_function(np.c_[XX.ravel(), YY.ravel(), ZZ.ravel()])
 plt.contourf(XX, YY, dec.reshape(XX.shape), levels=[dec.min(), 0, dec.max()], cmap=mglearn.cm2, alpha=0.5)
 mglearn.discrete_scatter(X[:, 0], X[:, 1], y)
@@ -87,7 +86,8 @@ for ax, C in zip(axes, [-1, 0, 3]):
     for a, gamma in zip(ax, range(-1, 2)):
         mglearn.plots.plot_svm(log_C=C, log_gamma=gamma, ax=a)
 
-axes[0, 0].legend(["class 0", "class 1", "sv class 0", "sv class 1"], ncol=4, loc=(.9, 1.2))
+axes[0, 0].legend(["class 0", "class 1", "support vectors for class 0", "support vectors for class 1"], ncol=4, loc=(.9,1.2))
+
 plt.show()
 
 
