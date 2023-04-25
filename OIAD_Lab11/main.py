@@ -36,7 +36,7 @@ plt.ylabel("Признак 1")
 plt.show()
 
 
-mlp = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes = [10])
+mlp = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes=[10])
 mlp.fit(X_train, y_train)
 mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
 mglearn.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)

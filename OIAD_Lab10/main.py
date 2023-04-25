@@ -21,7 +21,6 @@ plt.ylabel("Признак 1")
 plt.show()
 
 X_new = np.hstack([X, X[:, 1:] ** 2])
-
 figure = plt.figure()
 ax = plt.axes(projection='3d', elev=-152, azim=-26)
 mask = y == 0
@@ -35,7 +34,6 @@ ax.set_zlabel("Признак 1 ** 2")
 plt.show(block=True)
 
 linear_svm_3d = LinearSVC().fit(X_new, y)
-
 coef, intercept = linear_svm_3d.coef_.ravel(), linear_svm_3d.intercept_
 
 figure = plt.figure()
@@ -86,8 +84,7 @@ for ax, C in zip(axes, [-1, 0, 3]):
     for a, gamma in zip(ax, range(-1, 2)):
         mglearn.plots.plot_svm(log_C=C, log_gamma=gamma, ax=a)
 
-axes[0, 0].legend(["class 0", "class 1", "support vectors for class 0", "support vectors for class 1"], ncol=4, loc=(.9,1.2))
-
+axes[0, 0].legend(["class 0", "class 1", "support vectors for class 0", "support vectors for class 1"], ncol=4, loc=(.9 ,1.2))
 plt.show()
 
 
@@ -97,7 +94,7 @@ cancer = load_breast_cancer()
 X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, random_state=0)
 svc = SVC()
 svc.fit(X_train, y_train)
-print("Правильность на обучающем наборе: {:.3f}".format(svc.score(X_train, y_train)))
+print("\nПравильность на обучающем наборе: {:.3f}".format(svc.score(X_train, y_train)))
 print("Правильность на тестовом наборе: {:.3f}".format(svc.score(X_test, y_test)))
 plt.show()
 
@@ -113,19 +110,19 @@ plt.show()
 
 
 min_on_training = X_train.min(axis=0)
-range_on_training = (X_train - min_on_training) .max(axis=0)
+range_on_training = (X_train - min_on_training).max(axis=0)
 X_train_scaled = (X_train - min_on_training) / range_on_training
-print("Минимальное значение для каждого признака\n{}".format(X_train_scaled.min(axis=0)))
-print("Максимальное значение для каждого признака\n{}".format(X_train_scaled.max(axis=0)))
+print("\nМинимальное значение для каждого признака\n{}".format(X_train_scaled.min(axis=0)))
+print("\nМаксимальное значение для каждого признака\n{}".format(X_train_scaled.max(axis=0)))
 
 
 X_test_scaled = (X_test - min_on_training) / range_on_training
 svc = SVC()
 svc. fit(X_train_scaled, y_train)
-print("Правильность на обучающем наборе: {:.3f}".format(svc.score(X_train_scaled, y_train)))
+print("\nПравильность на обучающем наборе: {:.3f}".format(svc.score(X_train_scaled, y_train)))
 print("Правильность на тестовом наборе: {:.3f}".format(svc.score(X_test_scaled, y_test)))
 
 svc = SVC(C=1000)
 svc.fit(X_train_scaled, y_train)
-print("Правильность на обучающем наборе: {:.3f}".format(svc.score(X_train_scaled, y_train)))
+print("\nПравильность на обучающем наборе: {:.3f}".format(svc.score(X_train_scaled, y_train)))
 print("Правильность на тестовом наборе: {:.3f}".format(svc.score(X_test_scaled, y_test)))
