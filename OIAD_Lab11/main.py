@@ -1,8 +1,13 @@
 import mglearn
 import matplotlib.pyplot as plt
 import numpy as np
-
 from IPython.display import display
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+from sklearn.datasets import make_moons
+from sklearn.datasets import load_breast_cancer
+
+
 display(mglearn.plots.plot_single_hidden_layer_graph())
 
 
@@ -19,11 +24,9 @@ mglearn.plots.plot_two_hidden_layer_graph()
 plt.show()
 
 
-from sklearn.model_selection import train_test_split
-from sklearn.neural_network import MLPClassifier
-from sklearn.datasets import make_moons
 X, y = make_moons(n_samples=100, noise=0.25, random_state=3)
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, random_state=42)
+
 
 mlp = MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
 mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
@@ -85,7 +88,6 @@ plt.show()
 
 
 
-from sklearn.datasets import load_breast_cancer
 cancer = load_breast_cancer()
 print("Максимальные значения характеристик:\n{}".format(cancer.data.max(axis=0)))
 
@@ -129,5 +131,5 @@ plt.imshow(mlp.coefs_[0], interpolation='none', cmap='viridis')
 plt.yticks(range(30), cancer.feature_names)
 plt.xlabel("Столбцы матрицы весов")
 plt.ylabel("Входная характеристика")
-plt.colorbaz()
+plt.colorbar()
 plt.show()
