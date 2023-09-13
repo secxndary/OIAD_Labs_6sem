@@ -1,15 +1,17 @@
 import mglearn
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
 from IPython.display import display
-from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
-from sklearn.datasets import make_moons
-from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import make_moons, load_breast_cancer
 
 
-display(mglearn.plots.plot_single_hidden_layer_graph())
+hidden = mglearn.plots.plot_single_hidden_layer_graph()
+display(hidden)
 
+mglearn.plots.plot_two_hidden_layer_graph()
+plt.show()
 
 line = np.linspace(-3, 3, 100)
 plt.plot(line, np.tanh(line), label="tanh")
@@ -20,40 +22,42 @@ plt.ylabel("relu(x), tanh(x)")
 plt.show()
 
 
-mglearn.plots.plot_two_hidden_layer_graph()
-plt.show()
-
-
 X, y = make_moons(n_samples=100, noise=0.25, random_state=3)
 X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, random_state=42)
 
-
+# Стандартные значения (100 скрытых элементов)
 mlp = MLPClassifier(solver='lbfgs', random_state=0).fit(X_train, y_train)
 mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
 mglearn.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 plt.xlabel("Признак 0")
 plt.ylabel("Признак 1")
+plt.title("100 hidden nodes")
 plt.show()
 
 
+# 10 скрытых элементов
 mlp = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes=[10])
 mlp.fit(X_train, y_train)
 mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
 mglearn.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 plt.xlabel("Признак 0")
 plt.ylabel("Признак 1")
+plt.title("10 hidden nodes")
 plt.show()
 
 
+# Два скрытых слоя по 10 элементов
 mlp = MLPClassifier(solver='lbfgs', random_state=0, hidden_layer_sizes=[10, 10])
 mlp.fit(X_train, y_train)
 mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
 mglearn.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 plt.xlabel("Признак 0")
 plt.ylabel("Признак 1")
+plt.title("10 + 10 hidden nodes")
 plt.show()
 
 
+# Два скрытых слоя по 10 элементов с функцией активации tanh
 mlp = MLPClassifier(solver='lbfgs', activation='tanh',
                     random_state=0, hidden_layer_sizes=[10, 10])
 mlp.fit(X_train, y_train)
@@ -61,10 +65,11 @@ mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3)
 mglearn.discrete_scatter(X_train[:, 0], X_train[:, 1], y_train)
 plt.xlabel("Признак 0")
 plt.ylabel("Признак 1")
+plt.title("10 + 10 hidden nodes (tanh)")
 plt.show()
 
 
-
+# Разные значения alpha с двумя скрытыми слоями по 10 и по 100 элементов
 fig, axes = plt.subplots(2, 4, figsize=(20, 8))
 for axx, n_hidden_nodes in zip(axes, [10, 100]):
     for ax, alpha in zip(axx, [0.0001, 0.01, 0.1, 1]):
@@ -79,7 +84,7 @@ plt.show()
 
 
 fig, axes = plt.subplots(2, 4, figsize=(20, 8))
-for i, ax in enumerate (axes.ravel()):
+for i, ax in enumerate(axes.ravel()):
     mlp = MLPClassifier(solver='lbfgs', random_state=i, hidden_layer_sizes=[100, 100])
     mlp.fit(X_train, y_train)
     mglearn.plots.plot_2d_separator(mlp, X_train, fill=True, alpha=.3, ax=ax)
@@ -89,14 +94,14 @@ plt.show()
 
 
 cancer = load_breast_cancer()
-print("Максимальные значения характеристик:\n{}".format(cancer.data.max(axis=0)))
-
+print("Максимальные значения характеристик: \n{}".format(cancer.data.max(axis=0)))
 
 X_train, X_test, y_train, y_test = train_test_split(cancer.data, cancer.target, random_state=0)
 mlp = MLPClassifier(random_state=42)
 mlp.fit(X_train, y_train)
-print("\nПравильность на обучающем наборе: {:.2f}".format(mlp.score(X_train, y_train)))
-print("Правильность на тестовом наборе: {:.2f}\n".format(mlp.score(X_test, y_test)))
+print("\nDefault values:")
+print("Правильность на обучающем наборе: {:.3f}".format(mlp.score(X_train, y_train)))
+print("Правильность на тестовом наборе: {:.3f}\n".format(mlp.score(X_test, y_test)))
 
 
 
@@ -109,21 +114,23 @@ std_on_train = X_train.std(axis=0)
 X_test_scaled = (X_test - mean_on_train) / std_on_train
 mlp = MLPClassifier(random_state=0)
 mlp.fit(X_train_scaled, y_train)
-
-print("\nПравильность на обучающем наборе: {:.2f}".format(mlp.score(X_train_scaled, y_train)))
-print("Правильность на тестовом наборе: {:.2f}\n".format(mlp.score(X_test_scaled, y_test)))
+print("\nПосле масшатбирования:")
+print("Правильность на обучающем наборе: {:.3f}".format(mlp.score(X_train_scaled, y_train)))
+print("Правильность на тестовом наборе: {:.3f}\n".format(mlp.score(X_test_scaled, y_test)))
 
 
 mlp = MLPClassifier(max_iter=1000, random_state=0)
 mlp.fit(X_train_scaled, y_train)
-print("\nПравильность на обучающем наборе: {:.2f}".format(mlp.score(X_train_scaled, y_train)))
-print("Правильность на тестовом наборе: {:.2f}\n".format(mlp.score(X_test_scaled, y_test)))
+print("\nmax_iter = 1000:")
+print("Правильность на обучающем наборе: {:.3f}".format(mlp.score(X_train_scaled, y_train)))
+print("Правильность на тестовом наборе: {:.3f}\n".format(mlp.score(X_test_scaled, y_test)))
 
 
 mlp = MLPClassifier(max_iter=1000, alpha=1, random_state=0)
 mlp.fit(X_train_scaled, y_train)
-print("\nПравильность на обучающем наборе: {:.2f}".format(mlp.score(X_train_scaled, y_train)))
-print("Правильность на тестовом наборе: {:.2f}\n".format(mlp.score(X_test_scaled, y_test)))
+print("\nmax_iter = 1000, alpha = 1:")
+print("Правильность на обучающем наборе: {:.3f}".format(mlp.score(X_train_scaled, y_train)))
+print("Правильность на тестовом наборе: {:.3f}\n".format(mlp.score(X_test_scaled, y_test)))
 
 
 plt.figure(figsize=(20, 5))

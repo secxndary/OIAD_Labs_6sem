@@ -113,7 +113,7 @@ min_on_training = X_train.min(axis=0)
 range_on_training = (X_train - min_on_training).max(axis=0)
 X_train_scaled = (X_train - min_on_training) / range_on_training
 print("\nМинимальное значение для каждого признака\n{}".format(X_train_scaled.min(axis=0)))
-print("\nМаксимальное значение для каждого признака\n{}".format(X_train_scaled.max(axis=0)))
+print("Максимальное значение для каждого признака\n{}".format(X_train_scaled.max(axis=0)))
 
 
 X_test_scaled = (X_test - min_on_training) / range_on_training
